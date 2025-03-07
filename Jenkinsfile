@@ -65,6 +65,7 @@ pipeline {
                     sleep 10
                     echo "Starting playwright test..."
                     npx playwright test --reporter=html
+                    sleep 10
                 '''
             }
         }

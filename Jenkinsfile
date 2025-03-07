@@ -46,6 +46,12 @@ pipeline {
                             npm test
                         '''
                     }
+
+                    post {
+                        always {
+                            junit 'jest-test-results/junit.xml'
+                        }
+                    }
                 }
 
                 stage('End to End Test') {
@@ -70,17 +76,25 @@ pipeline {
                             sleep 10
                         '''
                     }
+
+                    post {
+                            always {
+                                // Need to run below script under Script Console in order to see the HTML page
+                                // System.setProperty("hudson.model.DirectoryBrowserSupport.CSP", "sandbox allow-scripts;")
+                                publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, icon: '', keepAll: false, reportDir: 'playwright-report', reportFiles: 'index.html', reportName: 'Playwright HTML Report', reportTitles: '', useWrapperFileDirectly: true])
+                            }
+                        }
                 }
             }
         }
     }
 
-    post {
-        always {
-            junit 'jest-test-results/junit.xml'
-            // Need to run below script under Script Console in order to see the HTML page
-            // System.setProperty("hudson.model.DirectoryBrowserSupport.CSP", "sandbox allow-scripts;")
-            publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, icon: '', keepAll: false, reportDir: 'playwright-report', reportFiles: 'index.html', reportName: 'Playwright HTML Report', reportTitles: '', useWrapperFileDirectly: true])
-        }
-    }
+//     post {
+//         always {
+//             junit 'jest-test-results/junit.xml'
+//             // Need to run below script under Script Console in order to see the HTML page
+//             // System.setProperty("hudson.model.DirectoryBrowserSupport.CSP", "sandbox allow-scripts;")
+//             publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, icon: '', keepAll: false, reportDir: 'playwright-report', reportFiles: 'index.html', reportName: 'Playwright HTML Report', reportTitles: '', useWrapperFileDirectly: true])
+//         }
+//     }
 }

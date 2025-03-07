@@ -49,7 +49,7 @@ pipeline {
         stage('End to End Test') {
             agent {
                 docker {
-                    image 'mcr.microsoft.com/playwright:v1.39.0-noble'
+                    image 'mcr.microsoft.com/playwright:v1.39.0-jammy'
                     reuseNode true
                     //args '-u root:root'
                 }

@@ -61,6 +61,8 @@ pipeline {
                     npm install serve
                     echo "Serving from build..."
                     node_modules/.bin/serve -s build &
+                    echo "Wait for few seconds..."
+                    sleep 10
                     echo "Starting playwright test..."
                     npx playwright test
                 '''

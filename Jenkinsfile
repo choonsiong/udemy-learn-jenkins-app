@@ -64,7 +64,7 @@ pipeline {
                     echo "Wait for few seconds..."
                     sleep 10
                     echo "Starting playwright test..."
-                    npx playwright test
+                    npx playwright test --reporter=html
                 '''
             }
         }

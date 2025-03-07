@@ -58,9 +58,9 @@ pipeline {
             steps {
                 sh '''
                     echo "Testing end-to-end node app..."
-                    sudo  npm install -g serve
+                    npm install serve
                     echo "Serving from build..."
-                    serve -s build
+                    node_modules/./bin/serve -s build
                     echo "Starting playwright test..."
                     npx playwright test
                 '''

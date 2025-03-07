@@ -2,6 +2,11 @@ pipeline {
     agent any
 
     stages {
+        // Line
+        /*
+        Line 1
+        Line 2
+        */
         stage('Build') {
             agent {
                 docker {
@@ -40,11 +45,31 @@ pipeline {
                 '''
             }
         }
+
+        stage('End to End Test') {
+            agent {
+                docker {
+                    image 'mcr.microsoft.com/playwright:v1.51.0-noble'
+                    reuseNode true
+                }
+            }
+
+            steps {
+                sh '''
+                    echo "Testing end-to-end node app..."
+                    npm install -g serve
+                    echo "Serving from build..."
+                    serve -s build
+                    echo "Starting playwright test..."
+                    npx playwright test
+                '''
+            }
+        }
     }
 
     post {
-            always {
-                junit 'test-results/junit.xml'
-            }
+        always {
+            junit 'test-results/junit.xml'
         }
+    }
 }
